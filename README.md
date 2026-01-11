@@ -52,6 +52,26 @@ Additionally, macOS allows certain characters in filenames (like `:` or `|`) tha
 
 ## Installation
 
+### Option 1: Install from PyPI (Recommended)
+
+Install directly using pip:
+
+```bash
+pip install mac2win-zip
+```
+
+Or using uv (faster):
+
+```bash
+uv tool install mac2win-zip
+```
+
+Now you can use `mac2win-zip` from anywhere!
+
+### Option 2: Install from Source
+
+If you want to contribute or modify the code:
+
 ```bash
 # Clone the repository
 git clone https://github.com/Wordbe/mac2win-zip.git
@@ -60,8 +80,6 @@ cd mac2win-zip
 # Install globally
 uv tool install .
 ```
-
-Now you can use `mac2win-zip` from anywhere!
 
 ## Quick Start
 
