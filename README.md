@@ -18,19 +18,25 @@
 
 | macOS (ZIP created)   | Windows (ZIP opened) |
 | --------------------- | -------------------- |
-| 📄 Hello?.pdf          | ❌ (removed)          |
-| 📄 안녕하세요 세상.pdf | ❌ (removed)          |
+| 📄 Hello World?.pdf   | ❌ (removed)          |
+| 📄 안녕하세요 세상.pdf    | ❌ (removed)          |
 
 ​                                                                            **⬇️  Use mac2win-zip  ⬇️**
 
 | macOS (ZIP created)   | Windows (ZIP opened)  |
 | --------------------- | --------------------- |
-| 📄 Hello.pdf          | ✅ Hello.pdf           |
-| 📄 안녕하세요 세상.pdf | ✅ 안녕하세요 세상.pdf |
+| 📄 Hello World.pdf    | ✅ Hello.pdf           |
+| 📄 안녕하세요 세상.pdf    | ✅ 안녕하세요 세상.pdf |
 
 > With mac2win-zip, your filenames stay intact when opening on Windows!
 > macOS에서 생성한 ZIP 파일을 Windows에서 열어도 파일명이 깨지지 않습니다.
 
+
+## Demo
+
+<p align="center">
+  <img src="demo/demo.gif" alt="mac2win-zip demo" width="800">
+</p>
 
 ## Why mac2win-zip?
 
