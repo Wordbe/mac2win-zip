@@ -1,0 +1,48 @@
+name: Mac2WinZip
+options:
+  bundleIdPrefix: com.wordbe.mac2win-zip
+  deploymentTarget:
+    macOS: "13.0"
+  developmentLanguage: en
+  xcodeVersion: "16.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+
+targets:
+  Mac2WinZipApp:
+    type: application
+    platform: macOS
+    sources:
+      - Mac2WinZipApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wordbe.mac2win-zip.app
+        INFOPLIST_FILE: Mac2WinZipApp/Info.plist
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "Apple Development"
+        PRODUCT_NAME: Mac2WinZip
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+        COMBINE_HIDPI_IMAGES: true
+    dependencies:
+      - target: FinderExtension
+        embed: true
+    entitlements:
+      path: Mac2WinZipApp/Mac2WinZipApp.entitlements
+
+  FinderExtension:
+    type: app-extension
+    platform: macOS
+    sources:
+      - FinderExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wordbe.mac2win-zip.app.finder-extension
+        INFOPLIST_FILE: FinderExtension/Info.plist
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "Apple Development"
+        PRODUCT_NAME: Mac2WinZipFinder
+        MACOSX_DEPLOYMENT_TARGET: "13.0"
+    entitlements:
+      path: FinderExtension/FinderExtension.entitlements
