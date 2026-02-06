@@ -54,3 +54,6 @@ Thumbs.db
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Agent
+.sisyphus/

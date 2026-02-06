@@ -147,6 +147,51 @@ mac2win-zip --help
 - **Smart Filtering**: Excludes hidden files (`.DS_Store`, etc.)
 - **Korean Support**: Perfect handling of Korean and other Unicode filenames
 - **Simple CLI**: Intuitive command-line interface
+- **Finder Integration**: Right-click context menu for macOS Finder
+
+
+## macOS Finder Integration
+
+Finder에서 파일이나 폴더를 우클릭하여 바로 Windows 호환 ZIP 파일을 생성할 수 있습니다.
+
+Right-click any file or folder in Finder to create a Windows-compatible ZIP instantly.
+
+### Quick Install
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Wordbe/mac2win-zip/main/macos/install.sh | bash
+```
+
+### Manual Install
+
+1. Install the CLI: `uv tool install mac2win-zip` or `pip install mac2win-zip`
+2. Download [`mac2win-compress.workflow`](https://github.com/Wordbe/mac2win-zip/tree/main/macos/mac2win-compress.workflow) from this repo
+3. Copy it to `~/Library/Services/`:
+   ```bash
+   cp -R mac2win-compress.workflow ~/Library/Services/
+   ```
+
+### Usage
+
+1. Finder에서 파일이나 폴더를 선택합니다
+2. 우클릭 → **빠른 동작** → **mac2win 압축**
+3. 같은 위치에 Windows 호환 ZIP 파일이 생성됩니다
+4. 완료 알림과 함께 Finder에서 ZIP 파일이 표시됩니다
+
+### Uninstall
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Wordbe/mac2win-zip/main/macos/uninstall.sh | bash
+```
+
+### Troubleshooting
+
+**"mac2win-zip이 설치되어 있지 않습니다" 오류:**
+- 설치 스크립트를 다시 실행하거나 수동 설치: `uv tool install mac2win-zip`
+
+**Quick Action이 메뉴에 나타나지 않을 때:**
+- 시스템 설정 → 개인정보 보호 및 보안 → 확장 프로그램 → Finder 에서 "mac2win 압축"이 활성화되어 있는지 확인하세요
+- `~/Library/Services/mac2win-compress.workflow` 폴더가 존재하는지 확인하세요
 
 
 ## License

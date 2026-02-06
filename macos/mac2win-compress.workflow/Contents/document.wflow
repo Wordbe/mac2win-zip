@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>523</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<false/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.0.3</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMLargeIconName</key>
+				<string>Automator</string>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<dict/>
+					<key>inputMethod</key>
+					<dict/>
+					<key>shell</key>
+					<dict/>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run Shell Script.action</string>
+				<key>ActionName</key>
+				<string>Run Shell Script</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string>#!/bin/bash
+
+# mac2win-zip Finder Quick Action
+# Windows 호환 ZIP 파일을 생성합니다
+
+export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+# 알림 함수
+notify() {
+    osascript -e "display notification \"$1\" with title \"mac2win 압축\""
+}
+
+# 에러 대화상자
+show_error() {
+    osascript -e "display alert \"mac2win 압축 - 오류\" message \"$1\" as critical"
+}
+
+# Finder에서 파일 표시
+reveal_in_finder() {
+    osascript -e "tell application \"Finder\" to reveal POSIX file \"$1\"" \
+              -e "tell application \"Finder\" to activate"
+}
+
+# mac2win-zip 바이너리 찾기
+MAC2WIN=$(command -v mac2win-zip)
+if [ -z "$MAC2WIN" ]; then
+    show_error "mac2win-zip이 설치되어 있지 않습니다.
+
+다음 명령어로 설치하세요:
+pip install mac2win-zip
+
+또는
+uv tool install mac2win-zip"
+    exit 1
+fi
+
+# 인자가 없으면 종료
+if [ $# -eq 0 ]; then
+    show_error "압축할 파일이나 폴더를 선택해주세요."
+    exit 1
+fi
+
+# 출력 경로 결정
+PARENT_DIR="$(dirname "$1")"
+
+if [ $# -eq 1 ]; then
+    BASENAME="$(basename "$1")"
+    if [ -d "$1" ]; then
+        # 단일 폴더: FolderName.zip
+        OUTPUT="$PARENT_DIR/$BASENAME.zip"
+    else
+        # 단일 파일: FileName.zip (확장자 제거)
+        OUTPUT="$PARENT_DIR/${BASENAME%.*}.zip"
+    fi
+else
+    # 여러 항목: archive.zip
+    OUTPUT="$PARENT_DIR/archive.zip"
+fi
+
+# 이미 같은 이름의 ZIP이 있으면 번호 추가
+if [ -f "$OUTPUT" ]; then
+    BASE="${OUTPUT%.zip}"
+    COUNT=1
+    while [ -f "${BASE} (${COUNT}).zip" ]; do
+        COUNT=$((COUNT + 1))
+    done
+    OUTPUT="${BASE} (${COUNT}).zip"
+fi
+
+# 압축 실행 (stderr 캡처)
+ERROR_LOG=$(mktemp)
+trap "rm -f \"$ERROR_LOG\"" EXIT
+
+if "$MAC2WIN" "$@" -o "$OUTPUT" 2&gt;"$ERROR_LOG"; then
+    notify "압축 완료: $(basename "$OUTPUT")"
+    reveal_in_finder "$OUTPUT"
+else
+    ERROR_MSG=$(head -1 "$ERROR_LOG")
+    show_error "압축에 실패했습니다.${ERROR_MSG:+
+
+$ERROR_MSG}"
+    exit 1
+fi</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>1</integer>
+					<key>shell</key>
+					<string>/bin/bash</string>
+					<key>source</key>
+					<string></string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.RunShellScript</string>
+				<key>CFBundleVersion</key>
+				<string>2.0.3</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunShellScriptAction</string>
+				<key>InputUUID</key>
+				<string>A1B2C3D4-E5F6-7890-ABCD-EF1234567890</string>
+				<key>Keywords</key>
+				<array>
+					<string>Shell</string>
+					<string>Script</string>
+					<string>Command</string>
+					<string>Run</string>
+					<string>Unix</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>B2C3D4E5-F6A7-8901-BCDE-F12345678901</string>
+				<key>UUID</key>
+				<string>C3D4E5F6-A7B8-9012-CDEF-123456789012</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<integer>1</integer>
+						<key>name</key>
+						<string>inputMethod</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+					<key>2</key>
+					<dict>
+						<key>default value</key>
+						<false/>
+						<key>name</key>
+						<string>CheckedForUserDefaultShell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>2</string>
+					</dict>
+					<key>3</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>COMMAND_STRING</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>3</string>
+					</dict>
+					<key>4</key>
+					<dict>
+						<key>default value</key>
+						<string>/bin/bash</string>
+						<key>name</key>
+						<string>shell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>4</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>529.000000:620.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
